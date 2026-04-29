@@ -3,76 +3,161 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>個人實驗室 | 空間管理</title>
+    <title>個人邀約空間 | Time & Space</title>
     <style>
-        :root { --muji-white: #fcfcfc; --muji-gray: #7f8c8d; --muji-border: #e0e0e0; }
-        body { font-family: "PingFang TC", sans-serif; background-color: var(--muji-white); color: #333; margin: 0; }
-        
-        /* 導覽列：切換分頁 */
-        nav { display: flex; justify-content: center; gap: 20px; padding: 20px; border-bottom: 1px solid var(--muji-border); background: #fff; }
-        nav a { text-decoration: none; color: var(--muji-gray); font-size: 0.85rem; letter-spacing: 1px; cursor: pointer; }
-        nav a.active { color: #000; font-weight: bold; border-bottom: 1px solid #000; }
+        :root {
+            --muji-white: #fcfcfc;
+            --muji-gray: #7f8c8d;
+            --muji-border: #e0e0e0;
+            --accent-blue: #5d6d7e;
+        }
 
-        .container { max-width: 750px; margin: 0 auto; padding: 40px 20px; }
+        body {
+            font-family: "PingFang TC", "Microsoft JhengHei", sans-serif;
+            background-color: var(--muji-white);
+            color: #333;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* 頂部導航 */
+        nav {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            padding: 25px 0;
+            background: #fff;
+            border-bottom: 1px solid var(--muji-border);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--muji-gray);
+            font-size: 0.9rem;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        nav a.active {
+            color: #000;
+            font-weight: bold;
+            border-bottom: 2px solid #000;
+            padding-bottom: 5px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 800px;
+            padding: 40px 20px;
+        }
+
         .tab-content { display: none; }
         .tab-content.active { display: block; }
 
-        /* 景點卡片風格 */
-        .spot-card { border: 1px solid var(--muji-border); padding: 20px; margin-bottom: 20px; border-radius: 4px; }
-        .spot-link { color: #4a90e2; font-size: 0.8rem; word-break: break-all; }
+        /* 角色守護者：橘色英短 */
+        #cat-guardian {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            font-size: 2.5rem;
+            cursor: pointer;
+            z-index: 1000;
+        }
 
-        /* 橘貓守護者 */
-        #cat-guardian { position: fixed; bottom: 20px; right: 20px; font-size: 2.5rem; cursor: pointer; }
+        /* 景點卡片 */
+        .spot-item {
+            background: #fff;
+            border: 1px solid var(--muji-border);
+            padding: 25px;
+            margin-bottom: 30px;
+            border-radius: 4px;
+        }
+
+        .spot-title { font-size: 1.1rem; font-weight: 400; margin-bottom: 10px; }
+        .spot-link { font-size: 0.8rem; color: var(--accent-blue); text-decoration: none; display: block; margin-bottom: 15px; }
+        .spot-link:hover { text-decoration: underline; }
+        .time-tag { display: inline-block; background: #f0f0f0; padding: 3px 10px; font-size: 0.75rem; border-radius: 20px; color: #666; }
+
     </style>
 </head>
 <body>
 
+    <div id="cat-guardian" title="點擊換心情">🐈</div>
+
     <nav>
-        <a onclick="showTab('knowledge')" id="nav-knowledge" class="active">知識藝廊</a>
-        <a onclick="showTab('calendar')" id="nav-calendar">空檔預約</a>
-        <a onclick="showTab('spots')" id="nav-spots">想去的點</a>
+        <a onclick="showTab('calendar')" id="nav-calendar" class="active">空檔查詢</a>
+        <a onclick="showTab('spots')" id="nav-spots">想去的地方</a>
     </nav>
 
-    <div id="cat-guardian">🐈</div>
-
     <div class="container">
-        <!-- 分頁 1: 知識藝廊 -->
-        <div id="knowledge" class="tab-content active">
-            <h2 style="font-weight: 300;">KNOWLEDGE GALLERY</h2>
-            <p style="font-size: 0.8rem; color: #999;">在此貢獻帶有出處的知識點。</p>
-            <div class="giscus"><!-- 貼上知識版 giscus --></div>
+        <!-- 分頁一：Calendly 預約 -->
+        <div id="calendar" class="tab-content active">
+            <header style="text-align: center; margin-bottom: 40px;">
+                <h2 style="font-weight: 300; letter-spacing: 3px;">SCHEDULE</h2>
+                <p style="font-size: 0.85rem; color: #999;">預約一個對等的時段，讓我們好好聊天。</p>
+            </header>
+            
+            <!-- Calendly 內嵌組件開始 -->
+            <div class="calendly-inline-widget" data-url="https://calendly.com/kitty32219/go-around" style="min-width:320px;height:700px;"></div>
+            <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
+            <!-- Calendly 內嵌組件結束 -->
         </div>
 
-        <!-- 分頁 2: 空檔預約 -->
-        <div id="calendar" class="tab-content">
-            <h2 style="font-weight: 300;">AVAILABILITY</h2>
-            <p style="font-size: 0.8rem; color: #999;">查看我有空的時間 (手動更新)。</p>
-            <!-- 嵌入 Google 日曆範例 -->
-            <iframe src="https://calendar.google.com/calendar/embed?src=YOUR_ID" style="border: 0" width="100%" height="400" frameborder="0" scrolling="no"></iframe>
-        </div>
-
-        <!-- 分頁 3: 景點功能 -->
+        <!-- 分頁二：景點清單 -->
         <div id="spots" class="tab-content">
-            <h2 style="font-weight: 300;">SPOT WISHLIST</h2>
-            <div class="spot-card">
-                <b>📍 景點名稱範例：台北市立美術館</b><br>
-                <a href="https://www.tfam.museum" class="spot-link">https://www.tfam.museum</a><br>
-                <p style="font-size: 0.85rem; color: #666;">預計時段：5月週末下午</p>
+            <header style="text-align: center; margin-bottom: 40px;">
+                <h2 style="font-weight: 300; letter-spacing: 3px;">WISHLIST</h2>
+                <p style="font-size: 0.85rem; color: #999;">這些是我感興趣的空間，歡迎在下方留言預約跟團。</p>
+            </header>
+
+            <!-- 景點範例 -->
+            <div class="spot-item">
+                <div class="spot-title">📍 景點名稱 (例如：台中某藝廊)</div>
+                <a href="https://example.com" target="_blank" class="spot-link">→ 點擊查看相關連結</a>
+                <div class="time-tag">預計時段：5 月某個週末下午</div>
             </div>
-            <div class="giscus"><!-- 貼上景點版 giscus (可跟團留言) --></div>
+
+            <!-- giscus 留言區：用於跟團討論 -->
+            <div class="giscus">
+<script src="https://giscus.app/client.js"
+        data-repo="kitty32219/mindful-space"
+        data-repo-id="R_kgDOSP7Znw"
+        data-category="General"
+        data-category-id="DIC_kwDOSP7Zn84C7984"
+        data-mapping="pathname"
+        data-strict="0"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="bottom"
+        data-theme="preferred_color_scheme"
+        data-lang="zh-TW"
+        crossorigin="anonymous"
+        async>
+</script>
+            </div>
         </div>
     </div>
 
     <script>
         function showTab(tabId) {
-            // 隱藏所有內容
-            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
-            document.querySelectorAll('nav a').forEach(nav => nav.classList.remove('active'));
-            
-            // 顯示特定內容
+            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
             document.getElementById(tabId).classList.add('active');
             document.getElementById('nav-' + tabId).classList.add('active');
         }
+
+        // 橘貓心情切換
+        const moods = ['🐈', '🧐', '🐾', '🍵'];
+        document.getElementById('cat-guardian').onclick = function() {
+            this.innerText = moods[Math.floor(Math.random() * moods.length)];
+        };
     </script>
 </body>
 </html>
