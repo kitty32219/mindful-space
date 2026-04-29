@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>個人實驗室 | 空間管理</title>
+    <style>
+        :root { --muji-white: #fcfcfc; --muji-gray: #7f8c8d; --muji-border: #e0e0e0; }
+        body { font-family: "PingFang TC", sans-serif; background-color: var(--muji-white); color: #333; margin: 0; }
+        
+        /* 導覽列：切換分頁 */
+        nav { display: flex; justify-content: center; gap: 20px; padding: 20px; border-bottom: 1px solid var(--muji-border); background: #fff; }
+        nav a { text-decoration: none; color: var(--muji-gray); font-size: 0.85rem; letter-spacing: 1px; cursor: pointer; }
+        nav a.active { color: #000; font-weight: bold; border-bottom: 1px solid #000; }
+
+        .container { max-width: 750px; margin: 0 auto; padding: 40px 20px; }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+
+        /* 景點卡片風格 */
+        .spot-card { border: 1px solid var(--muji-border); padding: 20px; margin-bottom: 20px; border-radius: 4px; }
+        .spot-link { color: #4a90e2; font-size: 0.8rem; word-break: break-all; }
+
+        /* 橘貓守護者 */
+        #cat-guardian { position: fixed; bottom: 20px; right: 20px; font-size: 2.5rem; cursor: pointer; }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a onclick="showTab('knowledge')" id="nav-knowledge" class="active">知識藝廊</a>
+        <a onclick="showTab('calendar')" id="nav-calendar">空檔預約</a>
+        <a onclick="showTab('spots')" id="nav-spots">想去的點</a>
+    </nav>
+
+    <div id="cat-guardian">🐈</div>
+
+    <div class="container">
+        <!-- 分頁 1: 知識藝廊 -->
+        <div id="knowledge" class="tab-content active">
+            <h2 style="font-weight: 300;">KNOWLEDGE GALLERY</h2>
+            <p style="font-size: 0.8rem; color: #999;">在此貢獻帶有出處的知識點。</p>
+            <div class="giscus"><!-- 貼上知識版 giscus --></div>
+        </div>
+
+        <!-- 分頁 2: 空檔預約 -->
+        <div id="calendar" class="tab-content">
+            <h2 style="font-weight: 300;">AVAILABILITY</h2>
+            <p style="font-size: 0.8rem; color: #999;">查看我有空的時間 (手動更新)。</p>
+            <!-- 嵌入 Google 日曆範例 -->
+            <iframe src="https://calendar.google.com/calendar/embed?src=YOUR_ID" style="border: 0" width="100%" height="400" frameborder="0" scrolling="no"></iframe>
+        </div>
+
+        <!-- 分頁 3: 景點功能 -->
+        <div id="spots" class="tab-content">
+            <h2 style="font-weight: 300;">SPOT WISHLIST</h2>
+            <div class="spot-card">
+                <b>📍 景點名稱範例：台北市立美術館</b><br>
+                <a href="https://www.tfam.museum" class="spot-link">https://www.tfam.museum</a><br>
+                <p style="font-size: 0.85rem; color: #666;">預計時段：5月週末下午</p>
+            </div>
+            <div class="giscus"><!-- 貼上景點版 giscus (可跟團留言) --></div>
+        </div>
+    </div>
+
+    <script>
+        function showTab(tabId) {
+            // 隱藏所有內容
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('nav a').forEach(nav => nav.classList.remove('active'));
+            
+            // 顯示特定內容
+            document.getElementById(tabId).classList.add('active');
+            document.getElementById('nav-' + tabId).classList.add('active');
+        }
+    </script>
+</body>
+</html>
