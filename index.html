@@ -2,168 +2,34 @@
 <html lang="zh-TW">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>個人實驗室 | 熵值監測</title>
+    <title>知識共時區 | 零碎知識的長尾價值</title>
     <style>
-        :root {
-            --bg-color: #f0f2f5;
-            --card-bg: #ffffff;
-            --accent-color: #4a90e2;
-            --text-main: #2c3e50;
-            --text-sub: #7f8c8d;
-        }
-
-        body {
-            font-family: 'Helvetica Neue', Arial, 'PingFang TC', sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            margin: 0;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        /* 守護者橘貓位置 */
-        .cat-guardian {
-            font-size: 3rem;
-            margin-top: 20px;
-            cursor: pointer;
-            filter: grayscale(0.2);
-            transition: transform 0.3s ease;
-        }
-        .cat-guardian:hover { transform: scale(1.1); }
-
-        header {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
-        h1 {
-            font-weight: 300;
-            font-size: 1.5rem;
-            letter-spacing: 3px;
-            color: var(--text-main);
-            text-transform: uppercase;
-        }
-
-        .container {
-            width: 100%;
-            max-width: 600px;
-        }
-
-        /* 備忘錄：拋棄雜念區 */
-        .brain-dump {
-            background: var(--card-bg);
-            padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-            margin-bottom: 25px;
-        }
-
-        .brain-dump label {
-            display: block;
-            font-size: 0.8rem;
-            color: var(--text-sub);
-            margin-bottom: 10px;
-            letter-spacing: 1px;
-        }
-
-        textarea {
-            width: 100%;
-            border: 1px solid #eee;
-            border-radius: 8px;
-            padding: 10px;
-            box-sizing: border-box;
-            font-size: 1rem;
-            resize: none;
-            background-color: #fafafa;
-        }
-
-        /* 數據記錄區標籤 */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-
-        .stat-item {
-            background: #fff;
-            padding: 10px;
-            border-radius: 8px;
-            font-size: 0.75rem;
-            color: var(--text-sub);
-            border-left: 3px solid var(--accent-color);
-        }
-
-        .stat-value {
-            display: block;
-            font-size: 1.1rem;
-            color: var(--text-main);
-            font-weight: bold;
-        }
-
-        /* 討論區（反省區） */
-        .reflection-zone {
-            margin-top: 40px;
-        }
-
-        .section-title {
-            font-size: 0.8rem;
-            color: var(--text-sub);
-            text-align: center;
-            margin-bottom: 20px;
-            position: relative;
-        }
-
-        .section-title::before {
-            content: "";
-            position: absolute;
-            left: 0; top: 50%; width: 30%; height: 1px; background: #ddd;
-        }
-
-        .section-title::after {
-            content: "";
-            position: absolute;
-            right: 0; top: 50%; width: 30%; height: 1px; background: #ddd;
-        }
-
+        body { font-family: 'Helvetica', sans-serif; background: #fafafa; color: #2c3e50; line-height: 1.6; padding: 40px 20px; }
+        .container { max-width: 650px; margin: 0 auto; }
+        header { border-bottom: 2px solid #eee; padding-bottom: 20px; margin-bottom: 30px; text-align: center; }
+        h1 { font-weight: 300; letter-spacing: 2px; font-size: 1.2rem; }
+        .rule-card { background: #fff; padding: 20px; border-radius: 8px; font-size: 0.85rem; color: #7f8c8d; border: 1px dashed #ccc; margin-bottom: 30px; }
+        .rule-card b { color: #34495e; }
+        /* 橘貓守護者：知識檢索模式 */
+        .cat-icon { font-size: 2rem; display: block; margin-bottom: 10px; }
     </style>
 </head>
 <body>
-
-    <div class="cat-guardian" title="守護者：橘色英短">🐈</div>
-
-    <header>
-        <h1>Experimental Log</h1>
-        <p style="font-size: 0.8rem; color: #999;">系統狀態：運行中 (Entropy: Stable)</p>
-    </header>
-
     <div class="container">
-        <!-- 備忘錄模式 -->
-        <div class="brain-dump">
-            <label>BRAIN DUMP / 雜念拋棄</label>
-            <textarea rows="3" placeholder="在此處寫下即時念頭... (按下重新整理即消失)"></textarea>
+        <header>
+            <span class="cat-icon">🧐</span>
+            <h1>KNOWLEDGE ARCHIVE</h1>
+            <p style="font-size: 0.8rem; color: #999;">每個人貢獻一個知識點，對抗資訊熵增。</p>
+        </header>
+
+        <div class="rule-card">
+            <b>💡 投稿協定：</b><br>
+            1. 內容：一句話核心知識 + 深度解析<br>
+            2. 出處：書名、論文代碼或 URL (無出處者橘貓會厭世)<br>
+            3. 態度：不爭辯立場，僅陳述事實與推論。
         </div>
 
-        <!-- 數據記錄感 -->
-        <div class="stats-grid">
-            <div class="stat-item">
-                今日腦內熵值
-                <span class="stat-value">Low / Normal</span>
-            </div>
-            <div class="stat-item">
-                決策品質回顧
-                <span class="stat-value">Standard</span>
-            </div>
-        </div>
-
-        <!-- 反省討論區 -->
-        <div class="reflection-zone">
-            <div class="section-title">DEEP REFLECTION AREA</div>
-            
-            <div class="giscus">
+        <div class="giscus">
 <script src="https://giscus.app/client.js"
         data-repo="kitty32219/mindful-space"
         data-repo-id="R_kgDOSP7Znw"
@@ -179,9 +45,7 @@
         crossorigin="anonymous"
         async>
 </script>
-            </div>
         </div>
     </div>
-
 </body>
 </html>
