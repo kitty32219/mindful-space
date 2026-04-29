@@ -2,33 +2,128 @@
 <html lang="zh-TW">
 <head>
     <meta charset="UTF-8">
-    <title>知識共時區 | 零碎知識的長尾價值</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KNOWLEDGE GALLERY | 知識藝廊</title>
     <style>
-        body { font-family: 'Helvetica', sans-serif; background: #fafafa; color: #2c3e50; line-height: 1.6; padding: 40px 20px; }
-        .container { max-width: 650px; margin: 0 auto; }
-        header { border-bottom: 2px solid #eee; padding-bottom: 20px; margin-bottom: 30px; text-align: center; }
-        h1 { font-weight: 300; letter-spacing: 2px; font-size: 1.2rem; }
-        .rule-card { background: #fff; padding: 20px; border-radius: 8px; font-size: 0.85rem; color: #7f8c8d; border: 1px dashed #ccc; margin-bottom: 30px; }
-        .rule-card b { color: #34495e; }
-        /* 橘貓守護者：知識檢索模式 */
-        .cat-icon { font-size: 2rem; display: block; margin-bottom: 10px; }
+        :root {
+            --muji-white: #fcfcfc;
+            --muji-gray: #7f8c8d;
+            --muji-border: #e0e0e0;
+            --accent-sand: #d7ccc8;
+        }
+
+        body {
+            font-family: "PingFang TC", "Hiragino Sans GB", "Microsoft JhengHei", sans-serif;
+            background-color: var(--muji-white);
+            color: #333;
+            margin: 0;
+            line-height: 1.8;
+            display: flex;
+            justify-content: center;
+        }
+
+        /* 橘色英短守護者：固定在右下角 */
+        .cat-guardian {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            font-size: 2.5rem;
+            z-index: 100;
+            cursor: help;
+            filter: drop-shadow(2px 2px 5px rgba(0,0,0,0.1));
+        }
+
+        .container {
+            width: 100%;
+            max-width: 750px;
+            padding: 60px 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 80px;
+        }
+
+        h1 {
+            font-weight: 300;
+            letter-spacing: 5px;
+            font-size: 1.4rem;
+            color: #444;
+            text-transform: uppercase;
+        }
+
+        .subtitle {
+            font-size: 0.85rem;
+            color: var(--muji-gray);
+            margin-top: 10px;
+        }
+
+        /* 投稿引導區塊 */
+        .input-guide {
+            background: #fff;
+            border: 1px solid var(--muji-border);
+            padding: 30px;
+            margin-bottom: 50px;
+            border-radius: 2px;
+            position: relative;
+        }
+
+        .input-guide::before {
+            content: "ARCHIVE PROTOCOL";
+            position: absolute;
+            top: -10px;
+            left: 20px;
+            background: var(--muji-white);
+            padding: 0 10px;
+            font-size: 0.7rem;
+            letter-spacing: 2px;
+            color: var(--muji-gray);
+        }
+
+        .format-example {
+            font-size: 0.9rem;
+            color: #555;
+        }
+
+        .format-tag {
+            display: inline-block;
+            background: var(--accent-sand);
+            padding: 2px 8px;
+            font-size: 0.7rem;
+            margin-right: 10px;
+            border-radius: 2px;
+        }
+
+        /* 留言區美化 */
+        .giscus {
+            margin-top: 40px;
+        }
+
     </style>
 </head>
 <body>
+
+    <!-- 守護者：橘色英短 -->
+    <div class="cat-guardian" title="正在監督出處是否正確...">🐈</div>
+
     <div class="container">
         <header>
-            <span class="cat-icon">🧐</span>
-            <h1>KNOWLEDGE ARCHIVE</h1>
-            <p style="font-size: 0.8rem; color: #999;">每個人貢獻一個知識點，對抗資訊熵增。</p>
+            <h1>Knowledge Gallery</h1>
+            <div class="subtitle">每一份知識，都該有它的根。</div>
         </header>
 
-        <div class="rule-card">
-            <b>💡 投稿協定：</b><br>
-            1. 內容：一句話核心知識 + 深度解析<br>
-            2. 出處：書名、論文代碼或 URL (無出處者橘貓會厭世)<br>
-            3. 態度：不爭辯立場，僅陳述事實與推論。
-        </div>
+        <section class="input-guide">
+            <div class="format-example">
+                <p><span class="format-tag">知識點</span> 簡短有力的一句話陳述</p>
+                <p><span class="format-tag">解析</span> 邏輯推導或深度說明</p>
+                <p><span class="format-tag">出處</span> 書籍、論文或可靠之網址</p>
+            </div>
+            <p style="font-size: 0.75rem; color: #999; margin-top: 20px;">
+                * 註：沒有出處的知識，如同沒有地基的建築。
+            </p>
+        </section>
 
+        <!-- 留言板 -->
         <div class="giscus">
 <script src="https://giscus.app/client.js"
         data-repo="kitty32219/mindful-space"
@@ -47,5 +142,6 @@
 </script>
         </div>
     </div>
+
 </body>
 </html>
