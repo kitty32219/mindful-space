@@ -3,52 +3,66 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>覺察空間 | 深度對話</title>
+    <title>我們的覺察時光 | 分享一天</title>
     <style>
         body {
             font-family: "PingFang TC", "Microsoft JhengHei", sans-serif;
-            background-color: #fcfcfc; /* 接近無印的米白 */
+            background-color: #f5f5f7; /* 稍微深一點點的米灰，更有質感 */
             color: #333;
             line-height: 1.8;
-            max-width: 800px;
+            max-width: 700px; /* 縮窄一點，像手機版朋友圈 */
             margin: 0 auto;
-            padding: 40px 20px;
+            padding: 30px 15px;
         }
         header {
-            margin-bottom: 60px;
+            margin-bottom: 40px;
             text-align: center;
         }
         h1 {
-            font-weight: 300;
-            letter-spacing: 2px;
+            font-weight: 400;
+            letter-spacing: 1px;
+            color: #444;
         }
         .intro {
-            font-size: 0.95rem;
-            color: #666;
-            border-bottom: 1px solid #eee;
-            padding-bottom: 30px;
-            margin-bottom: 40px;
+            font-size: 0.9rem;
+            color: #777;
+            background-color: rgb(255, 255, 255);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05); /* 淡淡的陰影 */
         }
-        /* 讓留言區塊也有點質感 */
+        .upload-tip {
+            color: #888;
+            font-size: 0.85rem;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+        
+        /* 讓 giscus 留言看起來像卡片 */
         .giscus {
-            margin-top: 50px;
+            margin-top: 30px;
+        }
+        /* 這邊是一些預設的 CSS 覆蓋，讓 giscus 圖片顯示更好看 */
+        .giscus-frame {
+            border-radius: 15px !important;
+            overflow: hidden;
         }
     </style>
 </head>
 <body>
 
 <header>
-    <h1>覺察空間</h1>
+    <h1>🌿 我們的覺察時光</h1>
     <div class="intro">
-        <p>「慢下來，是為了看清念頭的流動。」</p>
-        <p>這裡不歡迎即時的攻擊，只歡迎深思後的對話。<br>
-           在留言之前，請先問問自己：這句話是基於真誠，還是衝動？</p>
+        <p>「今天，你過得好嗎？」</p>
+        <p>這裡是我們的小基地，不追求點讚，只追求真實。<br>
+           分享一張今天的照片，或是此刻的想法。</p>
+        <div class="upload-tip">💡 提示：可以直接把圖片「拖進」留言框，或截圖後「貼上」喔！</div>
     </div>
 </header>
 
-<!-- 這裡是留言區塊，請把剛才在 giscus 複製的那段代碼貼在下面 -->
 <div class="giscus">
-    <script src="https://giscus.app/client.js"
+ <script src="https://giscus.app/client.js"
         data-repo="kitty32219/mindful-space"
         data-repo-id="R_kgDOSP7Znw"
         data-category="General"
@@ -62,8 +76,8 @@
         data-lang="zh-TW"
         crossorigin="anonymous"
         async>
-</script>
-</div>
+</script>   
+    </div>
 
 </body>
 </html>
