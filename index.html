@@ -3,26 +3,69 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KNOWLEDGE GALLERY | 知識藝廊 2.0</title>
+    <title>KNOWLEDGE GALLERY | 知識藝廊 2.0 - 夕陽限定</title>
     <style>
         :root {
+            /* 無印風灰白色 */
             --muji-white: #fcfcfc;
             --muji-gray: #7f8c8d;
             --muji-border: #e0e0e0;
-            --accent-sand: #d7ccc8;
+            
+            /* --- 新增的莫蘭迪夕陽色系 --- */
+            --sunset-sky: #f4eade;    /* 燕麥色天空 */
+            --sunset-sun: #eac8af;    /* 霧粉橘夕陽 */
+            --sunset-sea: #dcdedc;    /* 灰藍色海面 */
+            --muji-glass: rgba(252, 252, 252, 0.85); /* 留言板半透明背景 */
         }
 
         body {
             font-family: "PingFang TC", "Hiragino Sans GB", "Microsoft JhengHei", sans-serif;
-            background-color: var(--muji-white);
-            color: #333;
             margin: 0;
             line-height: 1.8;
             display: flex;
             justify-content: center;
+            min-height: 100vh; /* 確保背景鋪滿 */
+            color: #444;
+
+            /* --- 關鍵修改：CSS 生成夕陽海面背景 --- */
+            background-color: var(--sunset-sky);
+            background-image: 
+                /* 1. 太陽 (徑向漸層，偏下) */
+                radial-gradient(circle at 50% 75%, var(--sunset-sun) 0%, rgba(234, 200, 175, 0) 25%),
+                /* 2. 海面 (線性漸層，下半部) */
+                linear-gradient(to bottom, rgba(244, 234, 222, 0) 65%, var(--sunset-sea) 65%, var(--sunset-sea) 100%);
+            background-attachment: fixed; /* 背景固定，不隨捲動 */
         }
 
-        /* 橘色英短守護者：隨動狀態 */
+        /* --- 新增：北歐極簡 SVG 插畫容器 --- */
+        .scandi-illustration {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1; /* 放在所有內容後面 */
+            pointer-events: none; /* 防止干擾滑點擊 */
+            opacity: 0.7; /* 保持隱約，不干擾閱讀 */
+        }
+
+        /* --- 留言板容器修改 (加入霧面質感) --- */
+        .container {
+            width: 100%;
+            max-width: 750px;
+            padding: 60px 20px;
+            z-index: 1; /* 確保內容在插畫前面 */
+            
+            /* 讓容器本身帶有霧面白，與背景分離，保持閱讀性 */
+            background-color: var(--muji-glass);
+            backdrop-filter: blur(5px); /* 現代瀏覽器的毛玻璃效果 */
+            margin-top: 40px;
+            margin-bottom: 40px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03); /* 極淡的陰影 */
+        }
+
+        /* 原有的其餘樣式保持不變 */
         #cat-guardian {
             position: fixed;
             bottom: 30px;
@@ -31,59 +74,35 @@
             z-index: 100;
             cursor: pointer;
             transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            /* 防止貓咪被霧面濾鏡模糊 */
+            backdrop-filter: none; 
         }
         #cat-guardian:hover { transform: scale(1.2) rotate(5deg); }
 
-        .container {
-            width: 100%;
-            max-width: 750px;
-            padding: 60px 20px;
-        }
-
-        header {
-            text-align: center;
-            margin-bottom: 60px;
-        }
-
-        h1 {
-            font-weight: 300;
-            letter-spacing: 5px;
-            font-size: 1.4rem;
-            color: #444;
-            text-transform: uppercase;
-        }
-
-        /* 標籤系統提示 */
-        .tag-cloud {
-            text-align: center;
-            margin-bottom: 30px;
-            font-size: 0.75rem;
-            color: var(--muji-gray);
-        }
+        header { text-align: center; margin-bottom: 60px; }
+        h1 { font-weight: 300; letter-spacing: 5px; font-size: 1.4rem; color: #444; text-transform: uppercase; }
+        .tag-cloud { text-align: center; margin-bottom: 30px; font-size: 0.75rem; color: var(--muji-gray); }
         .tag { margin: 0 5px; text-decoration: underline; cursor: pointer; }
 
-        /* 格式生成器 */
         .template-box {
-            background: #fff;
+            background: #fff; /* 格式框保持純白 */
             border: 1px solid var(--muji-border);
             padding: 25px;
             margin-bottom: 50px;
             border-radius: 4px;
             position: relative;
         }
-
         .template-box::before {
             content: "PROTOCOL HELPER";
             position: absolute;
             top: -10px;
             left: 20px;
-            background: var(--muji-white);
+            background: #fff; /* 對應格式框的純白 */
             padding: 0 10px;
             font-size: 0.65rem;
             letter-spacing: 2px;
             color: var(--muji-gray);
         }
-
         .copy-btn {
             background: #444;
             color: #fff;
@@ -96,13 +115,40 @@
             transition: background 0.3s;
         }
         .copy-btn:hover { background: #666; }
-
         .giscus { margin-top: 40px; }
     </style>
 </head>
 <body>
 
-    <!-- 守護者：橘色英短 (預設睿智狀態) -->
+    <div class="scandi-illustration">
+        <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 1000 1000" preserveAspectRatio="xMidYMid slice">
+            <defs>
+                <style>
+                    .st1 { fill: none; stroke: #a0a0a0; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; } /* 幾何線條灰色 */
+                    .st2 { fill: #fcfcfc; } /* 帆船純白 */
+                </style>
+            </defs>
+
+            <g transform="translate(150, 150) scale(0.8)">
+                <path class="st1" d="M0,10 C15,-5 30,10 30,10 L30,10 C45,25 60,10 60,10" /> <path class="st1" d="M100,40 C110,30 120,40 120,40 L120,40 C130,50 140,40 140,40" transform="scale(0.7)"/> <path class="st1" d="M50,80 C60,70 70,80 70,80 L70,80 C80,90 90,80 90,80" transform="scale(0.5)"/> </g>
+
+            <g transform="translate(750, 620)">
+                <path class="st2" d="M0,30 L100,30 L80,50 L20,50 Z" /> 
+                <path class="st1" d="M0,30 L100,30 L80,50 L20,50 Z" /> 
+                <line class="st1" x1="50" y1="30" x2="50" y2="0" />
+                <path class="st2" d="M50,0 L90,25 L50,25 Z" />
+                <path class="st1" d="M50,0 L90,25 L50,25 Z" />
+            </g>
+
+            <g transform="translate(150, 660) scale(0.6)">
+                <path class="st2" d="M0,20 L60,20 L50,35 L10,35 Z" />
+                <path class="st1" d="M0,20 L60,20 L50,35 L10,35 Z" />
+                <line class="st1" x1="30" y1="20" x2="30" y2="5" />
+                <path class="st2" d="M30,5 L55,18 L30,18 Z" />
+                <path class="st1" d="M30,5 L55,18 L30,18 Z" />
+            </g>
+        </svg>
+    </div>
     <div id="cat-guardian" onclick="changeCatStatus()" title="點我檢查知識純度">🐈</div>
 
     <div class="container">
@@ -127,7 +173,7 @@
         </section>
 
         <div class="giscus">
-<script src="https://giscus.app/client.js"
+            <script src="https://giscus.app/client.js"
         data-repo="kitty32219/mindful-space"
         data-repo-id="R_kgDOSP7Znw"
         data-category="General"
@@ -146,7 +192,7 @@
     </div>
 
     <script>
-        // 1. 複製模板功能
+        // 原有的 Script 保持不變
         function copyTemplate() {
             const text = document.getElementById('template-text').innerText;
             navigator.clipboard.writeText(text).then(() => {
@@ -154,7 +200,6 @@
             });
         }
 
-        // 3. 橘貓守護者互動 (簡單範例)
         const catEmotes = ['🐈', '🧐', '🐾', '📙'];
         function changeCatStatus() {
             const cat = document.getElementById('cat-guardian');
@@ -162,11 +207,10 @@
             cat.innerText = randomEmote;
         }
         
-        // 模擬「週日休館」以外的另一種邏輯：根據時間改變貓咪表情
         const hour = new Date().getHours();
         const cat = document.getElementById('cat-guardian');
         if (hour > 23 || hour < 5) {
-            cat.innerText = '😴'; // 深夜時分，守護者也在休息
+            cat.innerText = '😴'; 
         }
     </script>
 </body>
