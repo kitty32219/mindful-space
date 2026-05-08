@@ -5,89 +5,119 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mindful Space | 驗證</title>
     <style>
+        /* 無印良品風格配色：溫暖的灰白色、炭灰色線條 */
         :root {
             --muji-gray: #7F7F7F;
             --muji-bg: #F7F6F5;
             --muji-border: #D1D1D1;
             --muji-white: #FFFFFF;
+            --muji-text: #444444;
         }
 
         body {
             margin: 0;
+            padding: 0;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
             background-color: var(--muji-bg);
-            font-family: "Helvetica Neue", Arial, "PingFang TC", "Microsoft JhengHei", sans-serif;
+            font-family: "Helvetica Neue", Helvetica, Arial, "PingFang TC", "Microsoft JhengHei", sans-serif;
             color: var(--muji-gray);
         }
 
         .login-container {
-            width: 85%;
-            max-width: 300px;
-            padding: 50px 40px;
+            width: 100%;
+            max-width: 320px;
+            padding: 60px 40px;
             background-color: var(--muji-white);
             border: 1px solid var(--muji-border);
             text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.02);
         }
 
         h1 {
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             font-weight: 400;
-            letter-spacing: 3px;
+            letter-spacing: 4px;
             margin-bottom: 40px;
-            color: #444;
+            color: var(--muji-text);
+        }
+
+        .input-group {
+            margin-bottom: 25px;
         }
 
         input[type="password"] {
             width: 100%;
-            padding: 10px 0;
+            padding: 12px 0;
             border: none;
             border-bottom: 1px solid var(--muji-border);
             background-color: transparent;
             font-size: 1rem;
             outline: none;
             text-align: center;
-            margin-bottom: 20px;
+            color: var(--muji-text);
+            transition: border-color 0.3s;
+        }
+
+        input[type="password"]:focus {
+            border-bottom: 1px solid var(--muji-gray);
         }
 
         button {
             width: 100%;
-            padding: 12px;
+            padding: 14px;
+            margin-top: 15px;
             background-color: var(--muji-gray);
             color: var(--muji-white);
             border: none;
             cursor: pointer;
             font-size: 0.85rem;
             letter-spacing: 2px;
-            transition: 0.3s;
+            transition: opacity 0.3s;
         }
 
-        button:hover { opacity: 0.7; }
+        button:hover {
+            opacity: 0.8;
+        }
 
         .hint {
-            margin-top: 30px;
-            font-size: 0.7rem;
-            color: #B0B0B0;
+            margin-top: 40px;
+            font-size: 0.75rem;
             line-height: 1.8;
+            color: #AAAAAA;
         }
 
-        #msg { color: #d9534f; font-size: 0.75rem; min-height: 1.2rem; margin-bottom: 10px; }
+        #error-message {
+            color: #b22222;
+            font-size: 0.75rem;
+            margin-top: 10px;
+            min-height: 1.2em;
+            visibility: hidden; /* 預留空間但不顯示 */
+        }
     </style>
 </head>
 <body>
 
     <div class="login-container">
         <h1>MINDFUL SPACE</h1>
-        <div id="msg"></div>
-        <input type="password" id="pw" placeholder="PASSWORD">
+        
+        <div class="input-group">
+            <input type="password" id="password" placeholder="PASSWORD" autocomplete="off">
+            <div id="error-message">密碼不正確</div>
+        </div>
+
         <button onclick="verify()">ENTER</button>
-        <div class="hint">PRIVATE SPACE<br>請輸入管理者提供的通行密碼</div>
+
+        <div class="hint">
+            PRIVATE SPACE<br>
+            若不知道密碼，請與管理者索取。
+        </div>
     </div>
 
     <script>
-        // 使用 SHA-256 雜湊處理，防止密碼被直接肉眼讀取
+        // SHA-256 雜湊演算法
         async function sha256(message) {
             const msgBuffer = new TextEncoder().encode(message);
             const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
@@ -96,26 +126,32 @@
         }
 
         async function verify() {
-            const input = document.getElementById('pw').value;
-            const msg = document.getElementById('msg');
+            const input = document.getElementById('password').value;
+            const errorMsg = document.getElementById('error-message');
             
-            // 這是 'nauihshiygnahc' 經過 SHA-256 轉換後的字串
-            const vault = "0357777085750800c6d70577727038166c4293f06368d184766f6630f5763073";
+            // 密碼 'nauihshiygnahc' 的 SHA-256 雜湊值
+            const vault = "e688f2894541738734208a0d481600e12089f928e46123405b5f81f185795632";
 
             const hashedInput = await sha256(input);
 
             if (hashedInput === vault) {
-                // 驗證成功
-                window.location.href = 'https://kitty32219.github.io/mindful-space/index.html';
+                // 驗證成功：跳轉至您的內容頁面
+                // 如果您把原本的網頁改名了，請修改下方的路徑
+                window.location.href = 'https://kitty32219.github.io/mindful-space/index.html'; 
             } else {
-                msg.innerText = "密碼不正確";
-                document.getElementById('pw').value = "";
+                // 顯示錯誤訊息
+                errorMsg.style.visibility = 'visible';
+                document.getElementById('password').value = "";
             }
         }
 
-        document.getElementById('pw').addEventListener('keypress', function (e) {
-            if (e.key === 'Enter') verify();
+        // 監聽 Enter 鍵
+        document.getElementById('password').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                verify();
+            }
         });
     </script>
+
 </body>
 </html>
