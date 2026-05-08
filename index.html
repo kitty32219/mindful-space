@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KNOWLEDGE GALLERY | 隨筆紀錄 - 夕陽限定</title>
+    <title>KNOWLEDGE GALLERY | 隨筆紀錄 - 動態路徑版</title>
     <style>
         :root {
             --muji-white: #fcfcfc;
@@ -17,295 +17,179 @@
 
         body {
             font-family: "PingFang TC", "Hiragino Sans GB", "Microsoft JhengHei", sans-serif;
-            margin: 0;
-            line-height: 1.8;
-            display: flex;
-            justify-content: center;
-            min-height: 100vh;
-            color: #444;
-            background-color: var(--sunset-sky);
+            margin: 0; line-height: 1.8; display: flex; justify-content: center;
+            min-height: 100vh; color: #444; background-color: var(--sunset-sky);
             background-image: 
                 radial-gradient(circle at 50% 75%, var(--sunset-sun) 0%, rgba(234, 200, 175, 0) 25%),
                 linear-gradient(to bottom, rgba(244, 234, 222, 0) 65%, var(--sunset-sea) 65%, var(--sunset-sea) 100%);
             background-attachment: fixed;
         }
 
-        .scandi-illustration {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            z-index: -1; pointer-events: none; opacity: 0.7;
-        }
-
         .container {
-            width: 100%;
-            max-width: 750px;
-            padding: 60px 20px;
-            z-index: 1;
-            background-color: var(--muji-glass);
-            backdrop-filter: blur(5px);
-            margin: 40px 0;
-            border-radius: 8px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+            width: 100%; max-width: 750px; padding: 60px 20px; z-index: 1;
+            background-color: var(--muji-glass); backdrop-filter: blur(5px);
+            margin: 40px 0; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.03);
         }
 
         header { text-align: center; margin-bottom: 40px; }
-        h1 { font-weight: 300; letter-spacing: 5px; font-size: 1.4rem; color: #444; text-transform: uppercase; margin-bottom: 10px; }
-        
-        /* --- 日曆與翻動卡片樣式 --- */
-        .calendar-nav {
-            text-align: center;
-            margin-bottom: 30px;
-        }
+        h1 { font-weight: 300; letter-spacing: 5px; font-size: 1.4rem; color: #444; text-transform: uppercase; }
 
+        .calendar-nav { text-align: center; margin-bottom: 30px; }
         #diary-picker {
-            border: 1px solid var(--muji-border);
-            padding: 8px 15px;
-            border-radius: 20px;
-            background: white;
-            color: var(--muji-gray);
-            font-family: inherit;
-            cursor: pointer;
-            outline: none;
-            transition: all 0.3s;
+            border: 1px solid var(--muji-border); padding: 8px 15px; border-radius: 20px;
+            background: white; color: var(--muji-gray); cursor: pointer; outline: none;
         }
 
-        #diary-picker:hover { border-color: var(--sunset-sun); }
-
-        #display-date {
-            display: block;
-            margin-top: 15px;
-            font-weight: 300;
-            letter-spacing: 3px;
-            font-size: 1.1rem;
-            color: #666;
-        }
-
-        .diary-wrapper {
-            perspective: 1200px;
-            margin-bottom: 50px;
-        }
-
+        .diary-wrapper { perspective: 1200px; margin-bottom: 50px; }
         .diary-card {
-            background: #fff;
-            border: 1px solid var(--muji-border);
-            padding: 40px;
-            border-radius: 2px;
-            position: relative;
-            box-shadow: 8px 8px 0px var(--sunset-sun);
+            background: #fff; border: 1px solid var(--muji-border); padding: 40px;
+            border-radius: 2px; position: relative; box-shadow: 8px 8px 0px var(--sunset-sun);
             transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s;
-            transform-origin: center bottom;
         }
-
-        /* 翻動動畫效果 */
-        .diary-card.flipping {
-            transform: rotateX(15deg) scale(0.95) translateY(-10px);
-            opacity: 0.5;
-        }
+        .diary-card.flipping { transform: rotateX(15deg) scale(0.95); opacity: 0.5; }
 
         .date-label {
-            position: absolute;
-            top: -12px;
-            right: 30px;
-            background: var(--sunset-sun);
-            color: white;
-            padding: 2px 18px;
-            font-size: 0.7rem;
-            letter-spacing: 1px;
+            position: absolute; top: -12px; right: 30px; background: var(--sunset-sun);
+            color: white; padding: 2px 18px; font-size: 0.7rem;
         }
-
-        .diary-content {
-            min-height: 120px;
-            border-left: 2px solid var(--sunset-sky);
-            padding-left: 20px;
-        }
-
-        .diary-content h2 {
-            font-size: 1.1rem;
-            font-weight: 400;
-            margin-top: 0;
-            color: #555;
-        }
-
-        /* --- 原有組件樣式 --- */
-        .tag-cloud { text-align: center; margin-bottom: 30px; font-size: 0.75rem; color: var(--muji-gray); }
-        .tag { margin: 0 5px; text-decoration: underline; cursor: pointer; }
 
         .template-box {
-            background: #fff;
-            border: 1px solid var(--muji-border);
-            padding: 25px;
-            margin-bottom: 50px;
-            border-radius: 4px;
-            position: relative;
+            background: #fff; border: 1px solid var(--muji-border); padding: 25px;
+            margin-bottom: 50px; border-radius: 4px; position: relative;
         }
         .template-box::before {
-            content: "PROTOCOL HELPER";
-            position: absolute;
-            top: -10px; left: 20px;
-            background: #fff;
-            padding: 0 10px;
-            font-size: 0.65rem;
-            letter-spacing: 2px;
-            color: var(--muji-gray);
+            content: "PROTOCOL HELPER"; position: absolute; top: -10px; left: 20px;
+            background: #fff; padding: 0 10px; font-size: 0.65rem; color: var(--muji-gray);
         }
 
         .copy-btn {
-            background: #444; color: #fff; border: none;
-            padding: 8px 15px; font-size: 0.75rem;
-            cursor: pointer; border-radius: 2px;
-            margin-top: 15px; transition: background 0.3s;
+            background: #444; color: #fff; border: none; padding: 8px 15px;
+            font-size: 0.75rem; cursor: pointer; border-radius: 2px; margin-top: 15px;
         }
-        .copy-btn:hover { background: #666; }
 
+        #giscus-container { margin-top: 40px; min-height: 300px; }
+        
         #cat-guardian {
-            position: fixed; bottom: 30px; right: 30px;
-            font-size: 2.8rem; z-index: 100; cursor: pointer;
-            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: fixed; bottom: 30px; right: 30px; font-size: 2.8rem;
+            z-index: 100; cursor: pointer; transition: transform 0.3s;
         }
-        #cat-guardian:hover { transform: scale(1.2) rotate(5deg); }
     </style>
 </head>
 <body>
-
-    <div class="scandi-illustration">
-        <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 1000 1000" preserveAspectRatio="xMidYMid slice">
-            <defs>
-                <style>
-                    .st1 { fill: none; stroke: #a0a0a0; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-                    .st2 { fill: #fcfcfc; }
-                </style>
-            </defs>
-            <g transform="translate(150, 150) scale(0.8)">
-                <path class="st1" d="M0,10 C15,-5 30,10 30,10 L30,10 C45,25 60,10 60,10" />
-            </g>
-            <g transform="translate(750, 620)">
-                <path class="st2" d="M0,30 L100,30 L80,50 L20,50 Z" /> 
-                <path class="st1" d="M0,30 L100,30 L80,50 L20,50 Z" /> 
-                <line class="st1" x1="50" y1="30" x2="50" y2="0" />
-                <path class="st2" d="M50,0 L90,25 L50,25 Z" />
-            </g>
-        </svg>
-    </div>
 
     <div id="cat-guardian" onclick="changeCatStatus()">🐈</div>
 
     <div class="container">
         <header>
             <h1>Knowledge Gallery</h1>
-            <div class="tag-cloud">
-                常用標籤：<span class="tag">#中醫</span> <span class="tag">#數學分析</span> <span class="tag">#投資邏輯</span> <span class="tag">#人性觀察</span>
-            </div>
         </header>
 
-        <!-- 日曆導覽 -->
         <div class="calendar-nav">
             <input type="date" id="diary-picker" onchange="handleDateChange()">
-            <span id="display-date">讀取中...</span>
+            <div id="display-date" style="margin-top:10px; letter-spacing:2px;"></div>
         </div>
 
-        <!-- 隨筆卡片 -->
         <div class="diary-wrapper">
             <div class="diary-card" id="diary-card">
-                <div class="date-label" id="card-label">TODAY</div>
-                <div class="diary-content">
-                    <h2 id="diary-title">今日隨筆紀錄</h2>
-                    <p id="diary-placeholder" style="color: #999; font-style: italic;">
-                        「溫故而知新，可以為師矣。」<br>
-                        請在下方留言區記錄今日的發現。
-                    </p>
+                <div class="date-label" id="card-label">SELECTED DATE</div>
+                <div class="diary-content" id="diary-content">
+                    <h2 id="diary-title" style="font-weight:400;">正在讀取紀錄...</h2>
                 </div>
             </div>
         </div>
 
         <section class="template-box">
-            <p style="font-size: 0.85rem; color: #555; margin-bottom: 15px;">使用格式投稿：</p>
-            <code id="template-text" style="font-size: 0.8rem; color: #888; display: block; background: #f9f9f9; padding: 10px;">
-                #標籤<br>
+            <code id="template-text" style="font-size: 0.8rem; color: #888;">
+                #隨筆 <span id="current-date-tag"></span><br>
                 【知識點】：<br>
-                【解析】：<br>
-                【出處】：
+                【解析】：
             </code>
+            <br>
             <button class="copy-btn" onclick="copyTemplate()">一鍵複製格式</button>
         </section>
 
-        <div class="giscus">
-            <script src="https://giscus.app/client.js"
-                data-repo="kitty32219/mindful-space"
-                data-repo-id="R_kgDOSP7Znw"
-                data-category="General"
-                data-category-id="DIC_kwDOSP7Zn84C7984"
-                data-mapping="pathname"
-                data-strict="0"
-                data-reactions-enabled="1"
-                data-emit-metadata="0"
-                data-input-position="bottom"
-                data-theme="preferred_color_scheme"
-                data-lang="zh-TW"
-                crossorigin="anonymous"
-                async>
-            </script>
-        </div>
+        <!-- Giscus 容器 -->
+        <div id="giscus-container"></div>
     </div>
 
     <script>
-        // 初始化日期
+        // --- 設定區 ---
+        const GISCUS_CONFIG = {
+            "repo": "kitty32219/mindful-space",
+            "repo-id": "R_kgDOSP7Znw",
+            "category": "General",
+            "category-id": "DIC_kwDOSP7Zn84C7984",
+            "mapping": "specific", // 改用特定字串匹配
+            "theme": "light",
+            "lang": "zh-TW"
+        };
+
         window.onload = function() {
-            const today = new Date();
-            const dateStr = today.toISOString().split('T')[0];
-            document.getElementById('diary-picker').value = dateStr;
-            updateDisplay(dateStr);
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('diary-picker').value = today;
+            updateDisplay(today);
+            loadGiscus(today); // 初始載入
         };
 
         function handleDateChange() {
-            const picker = document.getElementById('diary-picker');
+            const date = document.getElementById('diary-picker').value;
             const card = document.getElementById('diary-card');
             
-            // 觸發翻動動畫類別
             card.classList.add('flipping');
             
+            // 重新加載 Giscus
+            loadGiscus(date);
+            
             setTimeout(() => {
-                updateDisplay(picker.value);
+                updateDisplay(date);
                 card.classList.remove('flipping');
-            }, 400);
+            }, 500);
         }
 
-        function updateDisplay(dateStr) {
-            const dateObj = new Date(dateStr);
-            const formattedDate = dateStr.replace(/-/g, ' / ');
-            document.getElementById('display-date').innerText = formattedDate;
+        function updateDisplay(date) {
+            document.getElementById('display-date').innerText = date.replace(/-/g, ' / ');
+            document.getElementById('diary-title').innerText = date + " 的隨筆空間";
+            document.getElementById('current-date-tag').innerText = "#D" + date.replace(/-/g, '');
+        }
 
-            // 判斷是否為今天
-            const todayStr = new Date().toISOString().split('T')[0];
-            const label = document.getElementById('card-label');
-            const title = document.getElementById('diary-title');
+        function loadGiscus(date) {
+            const container = document.getElementById('giscus-container');
             
-            if (dateStr === todayStr) {
-                label.innerText = "TODAY";
-                label.style.background = "var(--sunset-sun)";
-                title.innerText = "今日隨筆紀錄";
-            } else {
-                label.innerText = "HISTORY";
-                label.style.background = "#bdc3c7";
-                title.innerText = formattedDate + " 的紀錄";
-            }
+            // 1. 清空舊的 Giscus
+            container.innerHTML = '';
+            
+            // 2. 建立新的 Script 標籤
+            const script = document.createElement('script');
+            script.src = "https://giscus.app/client.js";
+            script.setAttribute("data-repo", GISCUS_CONFIG.repo);
+            script.setAttribute("data-repo-id", GISCUS_CONFIG["repo-id"]);
+            script.setAttribute("data-category", GISCUS_CONFIG.category);
+            script.setAttribute("data-category-id", GISCUS_CONFIG["category-id"]);
+            script.setAttribute("data-mapping", "specific");
+            script.setAttribute("data-term", "diary-" + date); // 關鍵點：每一天一個獨立識別碼
+            script.setAttribute("data-strict", "0");
+            script.setAttribute("data-reactions-enabled", "1");
+            script.setAttribute("data-emit-metadata", "0");
+            script.setAttribute("data-input-position", "bottom");
+            script.setAttribute("data-theme", GISCUS_CONFIG.theme);
+            script.setAttribute("data-lang", GISCUS_CONFIG.lang);
+            script.crossOrigin = "anonymous";
+            script.async = true;
+            
+            container.appendChild(script);
         }
 
         function copyTemplate() {
             const text = document.getElementById('template-text').innerText;
             navigator.clipboard.writeText(text).then(() => {
-                alert('格式已複製，請至下方留言區貼上。');
+                alert('格式已複製！');
             });
         }
 
-        const catEmotes = ['🐈', '🧐', '🐾', '📙'];
         function changeCatStatus() {
             const cat = document.getElementById('cat-guardian');
-            cat.innerText = catEmotes[Math.floor(Math.random() * catEmotes.length)];
-        }
-        
-        const hour = new Date().getHours();
-        if (hour > 23 || hour < 5) {
-            document.getElementById('cat-guardian').innerText = '😴'; 
+            const emotes = ['🐈', '🧐', '🐾', '📙'];
+            cat.innerText = emotes[Math.floor(Math.random() * emotes.length)];
         }
     </script>
 </body>
