@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mindful Space | 登入</title>
+    <style>
+        /* 無印風核心配色：溫暖的淺灰色與木質調輔助色 */
+        :root {
+            --muji-gray: #7F7F7F;
+            --muji-bg: #F7F6F5;
+            --muji-border: #D1D1D1;
+            --muji-white: #FFFFFF;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: var(--muji-bg);
+            font-family: "Helvetica Neue", Helvetica, Arial, "PingFang TC", "Microsoft JhengHei", sans-serif;
+            color: var(--muji-gray);
+        }
+
+        .login-container {
+            width: 100%;
+            max-width: 320px;
+            padding: 40px;
+            background-color: var(--muji-white);
+            border: 1px solid var(--muji-border);
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+        }
+
+        h1 {
+            font-size: 1.2rem;
+            font-weight: 400;
+            letter-spacing: 2px;
+            margin-bottom: 30px;
+            color: #333;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        input[type="password"] {
+            width: 100%;
+            padding: 12px 0;
+            border: none;
+            border-bottom: 1px solid var(--muji-border);
+            background-color: transparent;
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.3s;
+            box-sizing: border-box;
+        }
+
+        input[type="password"]:focus {
+            border-bottom: 1px solid var(--muji-gray);
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            margin-top: 10px;
+            background-color: var(--muji-gray);
+            color: var(--muji-white);
+            border: none;
+            cursor: pointer;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            transition: opacity 0.3s;
+        }
+
+        button:hover {
+            opacity: 0.8;
+        }
+
+        .hint {
+            margin-top: 25px;
+            font-size: 0.75rem;
+            line-height: 1.6;
+            color: #999;
+        }
+
+        #error-message {
+            color: #b22222;
+            font-size: 0.8rem;
+            margin-top: 10px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="login-container">
+        <h1>MINDFUL SPACE</h1>
+        
+        <div class="input-group">
+            <input type="password" id="password" placeholder="請輸入密碼">
+            <div id="error-message">密碼錯誤，請重新輸入</div>
+        </div>
+
+        <button onclick="checkPassword()">進入頁面</button>
+
+        <div class="hint">
+            若不知道密碼，<br>請與管理者索取。
+        </div>
+    </div>
+
+    <script>
+        function checkPassword() {
+            const passwordInput = document.getElementById('password').value;
+            const errorMessage = document.getElementById('error-message');
+            
+            // 設定您的密碼
+            const correctPassword = 'nauihshiygnahc';
+
+            if (passwordInput === correctPassword) {
+                // 答對後跳轉至您的網頁
+                window.location.href = 'https://kitty32219.github.io/mindful-space/index.html';
+            } else {
+                // 顯示錯誤訊息
+                errorMessage.style.display = 'block';
+            }
+        }
+
+        // 支援按下 Enter 鍵登入
+        document.getElementById('password').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                checkPassword();
+            }
+        });
+    </script>
+
+</body>
+</html>
